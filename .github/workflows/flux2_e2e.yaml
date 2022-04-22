@@ -6,8 +6,6 @@ on:
   pull_request:
     branches: [main]
 
-permissions: read-all
-
 jobs:
   kubernetes:
     runs-on: ubuntu-latest
@@ -26,16 +24,16 @@ jobs:
         uses: engineerd/setup-kind@v0.5.0
         with:
           version: "v0.11.1"
-      - name: Bootstrap Flux in Kubernetes kind
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Flux in Kubernetes Kind
+        run: flux install
+      - name: Setup cluster reconciliation
         run: |
-          flux check --pre
-          flux bootstrap github \
-            --owner=${GITHUB_REPOSITORY_OWNER} \
-            --repository=$(basename ${GITHUB_REPOSITORY})
-            --branch=${GITHUB_HEAD_REF}
-            --path=./flux2/clusters/${{ matrix.cluster }}
+          flux create source git flux-system \
+          --url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY} \
+          --branch=${GITHUB_HEAD_REF}
+          flux create kustomization flux-system \
+          --source=flux-system \
+          --path=./flux2/clusters/${{ matrix.cluster }}
       - name: Verify reconciliations
         timeout-minutes: 5
         run: |
