@@ -58,5 +58,4 @@ structure:
 - All changes should be applied by MR/PR.
 - Setup CI pipeline to testing MR/PR changes.
 
-> flux2目前缺少官方集成的校验能力,如果能有dry-run能力进行验证,就不需要手动集成众多其它工具了.
-> TODO: 可以提交一个issue 和PR
+> TODO: can it be done only with flux tool kit?
