@@ -16,4 +16,6 @@ jobs:
       - name: Setup tools
         uses: ./.github/actions/flux2/tools
       - name: Validate manifests
-        run: ./flux2/scripts/validate.sh
+        run: |
+          chmod +x ./flux2/scripts/validate.sh
+          ./flux2/scripts/validate.sh
