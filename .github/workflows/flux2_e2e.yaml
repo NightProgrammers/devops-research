@@ -29,11 +29,11 @@ jobs:
       - name: Setup cluster reconciliation
         run: |
           flux create source git flux-system \
-          --url=${{ github.event.repository.html_url }} \
-          --branch=${GITHUB_REF_NAME}
+          --url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY} \
+          --branch=${GITHUB_HEAD_REF}
           flux create kustomization flux-system \
           --source=flux-system \
-          --path=./flux2/clusters/${{ matrix.site }}          
+          --path=./flux2/clusters/${{ matrix.site }}
       - name: Verify reconciliations
         timeout-minutes: 5
         run: |
