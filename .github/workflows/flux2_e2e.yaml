@@ -33,7 +33,7 @@ jobs:
           --branch=${GITHUB_HEAD_REF}
           flux create kustomization flux-system \
           --source=flux-system \
-          --path=./flux2/clusters/${{ matrix.site }}
+          --path=./flux2/clusters/${{ matrix.cluster }}
       - name: Verify reconciliations
         timeout-minutes: 5
         run: |
