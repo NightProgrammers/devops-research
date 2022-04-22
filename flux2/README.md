@@ -12,17 +12,17 @@ Install by bash or download release binary.
 
 ### flux service
 
+Please fork it.
+
 ```bash
 export GITHUB_TOKEN=<github private token>
-export GITHUB_USER=<github user>
+export GITHUB_REPOSITORY_OWNER=<github org>
 flux check --pre
 flux bootstrap github \
-    --owner=${GITHUB_USER} \
+    --owner=${GITHUB_REPOSITORY_OWNER} \
     --repository=devops-research \
     --branch=main \
     --path=flux2/clusters/staging
-    ......
-
 ```
 
 ### multi clusters and tenants
