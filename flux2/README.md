@@ -1,0 +1,62 @@
+Flux2 CD practice
+===
+
+Document Start from [here](https://fluxcd.io/docs/get-started/).
+Training at kotato
+
+## deploy
+
+### flux CLI
+
+Install by bash or download release binary.
+
+### flux service
+
+```bash
+export GITHUB_TOKEN=<github private token>
+export GITHUB_USER=<github user>
+flux check --pre
+flux bootstrap github \
+    --owner=${GITHUB_USER} \
+    --repository=devops-research \
+    --branch=main \
+    --path=flux2/clusters/staging
+    ......
+
+```
+
+### multi clusters and tenants
+
+- different stages should be deliveried to different clusters.
+- different tenants should be deliveried into different namespaces.
+
+ref: 
+- https://github.com/fluxcd/flux2-kustomize-helm-example
+- https://github.com/fluxcd/flux2-multi-tenancy
+
+## watched delivery git repo struct
+
+> recommand monorepo approach,constraction can be found [here](https://fluxcd.io/docs/guides/repository-structure/#delivery-management).
+
+structure:
+```
+├── apps
+│   ├── base
+│   ├── prod 
+│   └── staging
+├── infrastructure
+│   ├── base
+│   ├── prod
+│   └── staging
+└── clusters
+    ├── prod
+    └── staging
+```
+
+## Continue testing for CD repo changes.
+
+- All changes should be applied by MR/PR.
+- Setup CI pipeline to testing MR/PR changes.
+
+> flux2目前缺少官方集成的校验能力,如果能有dry-run能力进行验证,就不需要手动集成众多其它工具了.
+> TODO: 可以提交一个issue 和PR
