@@ -4,4 +4,4 @@ metadata:
   name: dev-team
   namespace: apps
 spec:
-  path: ./flux2/multi-tenants/dev-team/staging
+  path: ./flux2/multi-tenants/teams/dev-team/staging
