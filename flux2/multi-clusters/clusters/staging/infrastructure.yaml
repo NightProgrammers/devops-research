@@ -9,5 +9,5 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./flux2/infrastructure
+  path: ./flux2/multi-clusters/infrastructure
   prune: true

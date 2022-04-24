@@ -15,5 +15,5 @@ jobs:
         uses: ./.github/actions/flux2/tools
       - name: Validate manifests
         run: |
-          chmod +x ./flux2/scripts/validate.sh
-          ./flux2/scripts/validate.sh
+          chmod +x ./flux2/multi-clusters/scripts/validate.sh
+          ./flux2/multi-clusters/scripts/validate.sh
