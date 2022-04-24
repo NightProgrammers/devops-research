@@ -22,13 +22,16 @@ flux bootstrap github \
     --owner=${GITHUB_REPOSITORY_OWNER} \
     --repository=devops-research \
     --branch=main \
-    --path=flux2/clusters/staging
+    --path=flux2/multi-clusters/clusters/staging
 ```
 
 ### multi clusters and tenants
 
 - different stages should be deliveried to different clusters.
 - different tenants should be deliveried into different namespaces.
+- multi tenants supports:
+  - seperate with different repos of branches.
+  - seperate with different dirs with file ownwers enabled, here I using it.
 
 ref: 
 - https://github.com/fluxcd/flux2-kustomize-helm-example

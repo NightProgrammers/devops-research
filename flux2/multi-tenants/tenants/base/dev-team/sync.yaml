@@ -1,0 +1,26 @@
+# sync tenant's app.
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: dev-team
+  namespace: apps
+spec:
+  interval: 1m
+  url: https://github.com/NightProgrammers/devops-research
+  ref:
+    branch: main
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: dev-team
+  namespace: apps
+spec:
+  sourceRef:
+    kind: GitRepository
+    name: dev-team
+  path: ./flux2/multi-tenants/teams/dev-team/base
+  serviceAccountName: dev-team
+  interval: 5m
+  prune: true
+  validation: client

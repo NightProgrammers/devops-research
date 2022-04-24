@@ -1,19 +1,26 @@
-name: test
+name: Flux2 Test
 
 on:
   workflow_dispatch:
   pull_request:
     branches: [main]
-    
+    paths:
+      - "flux2/**"    
 jobs:
   manifests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        solution: [multi-clusters, multi-tenants]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup tools
         uses: ./.github/actions/flux2/tools
-      - name: Validate manifests
+      - name: Validate manifests        
         run: |
           chmod +x ./flux2/scripts/validate.sh
-          ./flux2/scripts/validate.sh
+          pushd ./flux2/${{ matrix.solution }}
+            ../scripts/validate.sh
+          popd

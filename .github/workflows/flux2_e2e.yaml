@@ -1,10 +1,12 @@
 # verify with local kind k8s cluster.
-name: e2e
+name: Flux2 E2E test
 
 on:
   workflow_dispatch:
   pull_request:
     branches: [main]
+    paths: 
+      - "flux2/**"
 
 jobs:
   kubernetes:
@@ -13,6 +15,7 @@ jobs:
       fail-fast: true
       matrix:
         cluster: [staging, prod]
+        solution: [multi-clusters, multi-tenants]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,7 +36,7 @@ jobs:
           --branch=${GITHUB_HEAD_REF}
           flux create kustomization flux-system \
           --source=flux-system \
-          --path=./flux2/clusters/${{ matrix.cluster }}
+          --path=./flux2/${{ matrix.solution }}/clusters/${{ matrix.cluster }}
       - name: Verify reconciliations
         timeout-minutes: 5
         run: |
