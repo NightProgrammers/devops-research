@@ -34,7 +34,7 @@ jobs:
           flux bootstrap github \
             --owner=${GITHUB_REPOSITORY_OWNER} \
             --repository=$(basename ${GITHUB_REPOSITORY}) \
-            --branch=${GITHUB_HEAD_REF} \
+            --branch=${GITHUB_REF_NAME} \
             --path=./flux2/${{ matrix.solution }}/clusters/${{ matrix.cluster }}
 
       - name: Verify reconciliations
