@@ -42,18 +42,39 @@ ref:
 > recommand monorepo approach,constraction can be found [here](https://fluxcd.io/docs/guides/repository-structure/#delivery-management).
 
 structure:
-```
-├── apps
-│   ├── base
-│   ├── prod 
-│   └── staging
-├── infrastructure
-│   ├── base
-│   ├── prod
-│   └── staging
-└── clusters
-    ├── prod
-    └── staging
+```bash
+├── multi-clusters # for practice multi clusters.
+│   ├── apps
+│   │   ├── base
+│   │   │   └── podinfo
+│   │   ├── prod
+│   │   └── staging
+│   ├── clusters
+│   │   ├── prod
+│   │   └── staging
+│   └── infrastructure
+│       ├── nginx
+│       ├── redis
+│       └── sources
+|
+├── multi-tenants # for practice multi tennats with multi clusters.
+│   ├── clusters
+│   │   ├── prod
+│   │   └── staging
+│   ├── infrastructure
+│   │   ├── kyverno # tennats control components.
+│   │   └── kyverno-policies # tennats control policies.
+│   ├── teams
+│   │   └── dev-team
+│   │       ├── base # team apps.
+│   │       ├── prod
+│   │       └── staging
+│   └── tenants
+│       ├── base
+│       │   └── dev-team
+│       ├── prod
+│       └── staging
+└── scripts # script for CI.
 ```
 
 ## Continue testing for CD repo changes.
