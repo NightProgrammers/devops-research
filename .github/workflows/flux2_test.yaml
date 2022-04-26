@@ -22,8 +22,7 @@ jobs:
       - name: Setup tools
         uses: ./.github/actions/flux2/tools
       - name: Validate manifests        
+        working-directory: flux2/${{ matrix.solution }}
         run: |
-          chmod +x ./flux2/scripts/validate.sh
-          pushd ./flux2/${{ matrix.solution }}
-            ../scripts/validate.sh
-          popd
+          chmod +x ../scripts/validate.sh
+          ../scripts/validate.sh
