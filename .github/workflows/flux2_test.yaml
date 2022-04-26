@@ -2,10 +2,13 @@ name: Flux2 Test
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches: [main]
-    paths:
-      - "flux2/**"    
+  push:
+    branches: [ '*' ]
+    tags-ignore: [ '*' ]
+    paths: 
+      - "flux2/**"
+      - ".github/workflows/flux2*"
+
 jobs:
   manifests:
     runs-on: ubuntu-latest
