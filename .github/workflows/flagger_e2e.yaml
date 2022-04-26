@@ -31,10 +31,21 @@ jobs:
            flux check --pre
            flux install
       - name: Setup cluster reconciliation
-        run: |
-          flux create source git flux-system \
-            --url=${{ github.event.repository.html_url }} \
-            --branch=${GITHUB_REF#refs/heads/}
+        run: |         
+          kubectl apply -f - <<EOF > cat
+          apiVersion: source.toolkit.fluxcd.io/v1beta2
+          kind: GitRepository
+          metadata:
+            name: flux-system
+            namespace: flux-system
+          spec:
+            interval: 15m
+            ref:
+              branch: ${GITHUB_REF#refs/heads/}
+            url: ${{ github.event.repository.html_url }}
+            ignore: /flagger/clusters/${{ matrix.cluster }}/flux-system/
+          EOF
+
           flux create kustomization flux-system \
             --source=flux-system \
             --path=./flagger/clusters/${{ matrix.cluster }}
