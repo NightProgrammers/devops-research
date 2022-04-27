@@ -77,6 +77,51 @@ structure:
 └── scripts # script for CI.
 ```
 
+If you want to get summary structure of kustomization of or other deploy kind, you can using `flux tree` command, for an example:
+```bash
+flux tree kustomization flux-system
+```
+the output will be: 
+```
+Kustomization/flux-system/flux-system
+├── Kustomization/flux-system/apps
+└── Kustomization/flux-system/infrastructure
+    ├── Namespace/istio-system
+    ├── Kustomization/flux-system/istio-gateway
+    │   ├── MetricTemplate/istio-system/error-rate
+    │   ├── MetricTemplate/istio-system/latency
+    │   └── Gateway/istio-system/public-gateway
+    ├── Kustomization/flux-system/istio-operator
+    │   ├── CustomResourceDefinition/istiooperators.install.istio.io
+    │   ├── Namespace/istio-operator
+    │   ├── ServiceAccount/istio-operator/istio-operator
+    │   ├── ClusterRole/istio-operator
+    │   ├── ClusterRoleBinding/istio-operator
+    │   ├── Service/istio-operator/istio-operator
+    │   └── Deployment/istio-operator/istio-operator
+    └── Kustomization/flux-system/istio-system
+        ├── ServiceAccount/istio-system/prometheus
+        ├── ClusterRole/prometheus
+        ├── ClusterRoleBinding/prometheus
+        ├── ConfigMap/istio-system/prometheus
+        ├── Service/istio-system/prometheus
+        ├── Deployment/istio-system/prometheus
+        ├── HelmRelease/istio-system/flagger
+        │   ├── ServiceAccount/flagger
+        │   ├── ClusterRole/flagger
+        │   ├── ClusterRoleBinding/flagger
+        │   └── Deployment/flagger
+        ├── HelmRelease/istio-system/flagger-grafana
+        │   ├── ConfigMap/flagger-grafana-dashboards
+        │   ├── ConfigMap/flagger-grafana-datasources
+        │   ├── ConfigMap/flagger-grafana-providers
+        │   ├── Service/flagger-grafana
+        │   └── Deployment/flagger-grafana
+        ├── IstioOperator/istio-system/istio-default
+        └── HelmRepository/istio-system/flagger
+
+```
+
 ## Continue testing for CD repo changes.
 
 - All changes should be applied by MR/PR.
