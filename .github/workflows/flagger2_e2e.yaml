@@ -1,0 +1,87 @@
+# verify with local kind k8s cluster.
+name: Flagger E2E Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ '*' ]
+    tags-ignore: [ '*' ]
+    paths: 
+      - "flagger2/**"
+      - ".github/workflows/flagger2*"
+
+jobs:
+  kubernetes:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true    
+      matrix:
+        cluster: [prod]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Flux
+        uses: fluxcd/flux2/action@main
+      - name: Setup Kubernetes
+        uses: engineerd/setup-kind@v0.5.0
+        with:
+          version: v0.11.1
+      - name: Install Flux in Kubernetes Kind
+        run: |
+           flux check --pre
+           flux install
+      - name: Setup cluster reconciliation
+        run: |         
+          kubectl apply -f - <<EOF > cat
+          apiVersion: source.toolkit.fluxcd.io/v1beta2
+          kind: GitRepository
+          metadata:
+            name: flux-system
+            namespace: flux-system
+          spec:
+            interval: 15m
+            ref:
+              branch: ${GITHUB_REF#refs/heads/}
+            url: ${{ github.event.repository.html_url }}
+            ignore: /flagger2/clusters/${{ matrix.cluster }}/flux-system/
+          EOF
+
+          flux create kustomization flux-system \
+            --source=flux-system \
+            --path=./flagger2/clusters/${{ matrix.cluster }}
+
+      - name: Verify cluster reconciliations
+        timeout-minutes: 5
+        run: |
+          while flux get all --all-namespaces --status-selector=ready=false | grep False
+          do
+            sleep 5
+          done
+      - name: Test canary release
+        run: |
+          kubectl -n apps set image deployment/podinfo podinfo=stefanprodan/podinfo:5.0.1
+          echo '>>> Waiting for canary finalization'
+          retries=25
+          count=0
+          ok=false
+          until ${ok}; do
+              kubectl -n apps get canary/backend | grep 'Succeeded' && ok=true || ok=false
+              sleep 20
+              kubectl -n istio-system logs deployment/flagger --tail 1
+              count=$(($count + 1))
+              if [[ ${count} -eq ${retries} ]]; then
+                  echo "No more retries left"
+                  exit 1
+              fi
+          done
+      - name: Debug failure
+        if: failure()
+        run: |
+          kubectl -n flux-system get all
+          kubectl -n flux-system logs deploy/source-controller
+          kubectl -n flux-system logs deploy/kustomize-controller
+          kubectl -n flux-system logs deploy/helm-controller
+          kubectl -n istio-system logs deployment/flagger
+          kubectl -n istio-operator get all
+          kubectl -n istio-system get all
+          flux get all --all-namespaces
