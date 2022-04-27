@@ -1,5 +1,5 @@
 
-name: Flagger Test
+name: Flagger2 Test
 
 on:
   workflow_dispatch:
