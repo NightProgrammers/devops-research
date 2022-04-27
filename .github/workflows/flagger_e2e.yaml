@@ -1,5 +1,5 @@
 # verify with local kind k8s cluster.
-name: Flagger E2E Test
+name: Flagger2 E2E Test
 
 on:
   workflow_dispatch:

@@ -6,11 +6,11 @@ metadata:
 spec:
   interval: 30m0s
   dependsOn:
-    - name: infrastructure
+    - name: istio-system
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./flagger/apps/prod
+  path: ./flagger2/apps
   prune: true
   validation: client
   healthChecks:
