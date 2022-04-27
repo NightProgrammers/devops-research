@@ -1,5 +1,5 @@
 # verify with local kind k8s cluster.
-name: Flagger2 E2E Test
+name: Flagger E2E Test
 
 on:
   workflow_dispatch:
@@ -57,9 +57,14 @@ jobs:
           do
             sleep 5
           done
+
+          kubectl -n apps wait canary/frontend --for=condition=promoted --timeout=1m
+          kubectl -n apps rollout status deployment/frontend --timeout=1m
+          kubectl -n apps wait canary/backend --for=condition=promoted --timeout=1m
+          kubectl -n apps rollout status deployment/backend --timeout=1m
       - name: Test canary release
         run: |
-          kubectl -n apps set image deployment/podinfo podinfo=stefanprodan/podinfo:5.0.1
+          kubectl -n apps set image deployment/backend backend=stefanprodan/podinfo:5.0.1
           echo '>>> Waiting for canary finalization'
           retries=25
           count=0

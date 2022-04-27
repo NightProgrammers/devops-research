@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./flagger2/apps
+  path: ./flagger/apps
   prune: true
   validation: client
   healthChecks:
