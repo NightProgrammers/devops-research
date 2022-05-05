@@ -2,10 +2,9 @@
 name: Flux2 E2E test
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [ '*' ]
-    tags-ignore: [ '*' ]
+  workflow_dispatch:    
+  pull_request:
+    branches: [main]
     paths: 
       - "flux2/**"
       - ".github/workflows/flux2*"
@@ -44,7 +43,7 @@ jobs:
           spec:
             interval: 15m
             ref:
-              branch: ${GITHUB_REF#refs/heads/}
+              branch: ${GITHUB_HEAD_REF}
             url: ${{ github.event.repository.html_url }}
             ignore: /flux2/${{ matrix.solution }}/clusters/${{ matrix.cluster }}/flux-system/
           EOF
