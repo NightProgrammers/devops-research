@@ -2,10 +2,9 @@ name: Flux2 Test
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ '*' ]
-    tags-ignore: [ '*' ]
-    paths: 
+  pull_request:
+    branches: [main]
+    paths:
       - "flux2/**"
       - ".github/workflows/flux2*"
 
@@ -21,7 +20,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup tools
         uses: ./.github/actions/flux2/tools
-      - name: Validate manifests        
+      - name: Validate manifests
         working-directory: flux2/${{ matrix.solution }}
         run: |
           chmod +x ../scripts/validate.sh
