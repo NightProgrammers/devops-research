@@ -62,9 +62,6 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-
-
-
   rules:
   - host:
     http:
