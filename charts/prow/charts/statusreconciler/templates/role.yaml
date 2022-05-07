@@ -1,35 +1,30 @@
 {{- if .Values.serviceAccount.roleBinding.create }}
----
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "crier.roleName" . }}
+  name: {{ include "statusreconciler.roleName" . }}
   labels:
-    {{- include "crier.labels" . | nindent 4 }}
+    {{- include "statusreconciler.labels" . | nindent 4 }}
 rules:
   - apiGroups:
-      - prow.k8s.io
+    - prow.k8s.io
     resources:
-      - "prowjobs"
+    - prowjobs
     verbs:
-      - "get"
-      - "watch"
-      - "list"
-      - "patch"
-
+    - create
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "crier.roleBindingName" . }}
+  name: {{ include "statusreconciler.roleBindingName" . }}
   labels:
-    {{- include "crier.labels" . | nindent 4 }}
+    {{- include "statusreconciler.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ include "crier.roleName" . }}
+  name: {{ include "statusreconciler.roleName" . }}
 subjects:
   - kind: ServiceAccount
-    name: {{ include "crier.serviceAccountName" . }}
+    name: {{ include "statusreconciler.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 {{- end }}

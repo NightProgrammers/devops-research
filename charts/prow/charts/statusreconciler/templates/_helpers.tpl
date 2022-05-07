@@ -61,3 +61,21 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the role
+*/}}
+{{- define "statusreconciler.roleName" -}}
+{{- if .Values.serviceAccount.roleBinding.create }}
+{{- default (include "statusreconciler.fullname" .) .Values.serviceAccount.roleBinding.role }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the role binding
+*/}}
+{{- define "statusreconciler.roleBindingName" -}}
+{{- if .Values.serviceAccount.roleBinding.create }}
+{{- default (include "statusreconciler.fullname" .) .Values.serviceAccount.roleBinding.name }}
+{{- end }}
+{{- end }}

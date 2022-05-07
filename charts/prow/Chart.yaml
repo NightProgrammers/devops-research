@@ -42,7 +42,7 @@ dependencies:
     version: 0.1.0
   - name: prow-controller-manager
     version: 0.1.0
-  - name: sink
+  - name: sinker
     version: 0.1.0
   - name: statusreconciler
     version: 0.1.0

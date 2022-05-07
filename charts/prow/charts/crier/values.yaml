@@ -77,4 +77,3 @@ prow:
   minioRegion: minio
   minioRootUser: <<CHANGE_ME_MINIO_ROOT_USER>>
   minioRootPassword: <<CHANGE_ME_MINIO_ROOT_PASSWORD>>
-

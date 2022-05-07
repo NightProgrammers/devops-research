@@ -2,7 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1 # Do not scale up.
+# Do not scale up.
+replicaCount: 1
 
 image:
   repository: gcr.io/k8s-prow/tide
@@ -22,6 +23,8 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
+  roleBinding:
+    create: true
 
 podAnnotations: {}
 

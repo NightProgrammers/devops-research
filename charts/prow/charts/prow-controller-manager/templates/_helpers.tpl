@@ -61,3 +61,21 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the role
+*/}}
+{{- define "prow-controller-manager.roleName" -}}
+{{- if .Values.serviceAccount.roleBinding.create }}
+{{- default (include "prow-controller-manager.fullname" .) .Values.serviceAccount.roleBinding.role }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the role binding
+*/}}
+{{- define "prow-controller-manager.roleBindingName" -}}
+{{- if .Values.serviceAccount.roleBinding.create }}
+{{- default (include "prow-controller-manager.fullname" .) .Values.serviceAccount.roleBinding.name }}
+{{- end }}
+{{- end }}

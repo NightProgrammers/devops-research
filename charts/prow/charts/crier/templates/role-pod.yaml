@@ -33,7 +33,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: crier
+  name: {{ include "crier.roleName" . }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "crier.serviceAccountName" . }}

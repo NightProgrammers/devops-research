@@ -61,3 +61,21 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the role
+*/}}
+{{- define "hook.roleName" -}}
+{{- if .Values.serviceAccount.roleBinding.create }}
+{{- default (include "hook.fullname" .) .Values.serviceAccount.roleBinding.role }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the role binding
+*/}}
+{{- define "hook.roleBindingName" -}}
+{{- if .Values.serviceAccount.roleBinding.create }}
+{{- default (include "hook.fullname" .) .Values.serviceAccount.roleBinding.name }}
+{{- end }}
+{{- end }}

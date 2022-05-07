@@ -36,7 +36,11 @@ jobs:
           fi
 
       - name: Run chart-testing (lint)
-        run: ct lint --all --debug
+        run: |
+          # from sub `charts` dir to uplevel dir.
+          for d in `find . -name charts -type d | sort -r`; do
+            ct lint --all --debug --chart-dirs=${d#./}
+          done
 
       - name: Setup Kubernetes
         uses: engineerd/setup-kind@v0.5.0
