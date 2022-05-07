@@ -12,7 +12,7 @@ spec:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
-      maxUnavailable: 1  
+      maxUnavailable: 1
   selector:
     matchLabels:
       {{- include "hook.selectorLabels" . | nindent 6 }}
@@ -80,7 +80,7 @@ spec:
               port: 8081
             initialDelaySeconds: 10
             periodSeconds: 3
-            timeoutSeconds: 600          
+            timeoutSeconds: 600
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
@@ -95,7 +95,7 @@ spec:
             name: config
         - name: plugins
           configMap:
-            name: plugins      
+            name: plugins
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

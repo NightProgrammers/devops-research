@@ -9,10 +9,10 @@ spec:
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   strategy:
-    type: Recreate    
+    type: Recreate
   selector:
     matchLabels:
-      {{- include "horologium.selectorLabels" . | nindent 6 }}    
+      {{- include "horologium.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -38,7 +38,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
             - --dry-run=false
-            - --config-path=/etc/config/config.yaml          
+            - --config-path=/etc/config/config.yaml
           ports:
             - name: http
               containerPort: 80
@@ -52,7 +52,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: config            
+            name: config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

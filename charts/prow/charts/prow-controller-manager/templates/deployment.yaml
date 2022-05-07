@@ -46,7 +46,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: github-token
-                key: appid          
+                key: appid
           volumeMounts:
           - name: github-token
             mountPath: /etc/github
@@ -62,7 +62,7 @@ spec:
           secretName: github-token
       - name: config
         configMap:
-          name: config            
+          name: config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

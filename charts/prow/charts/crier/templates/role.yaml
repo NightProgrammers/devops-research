@@ -6,7 +6,7 @@ metadata:
   name: {{ include "crier.roleName" . }}
   labels:
     {{- include "crier.labels" . | nindent 4 }}
-rules:  
+rules:
   - apiGroups:
       - "prow.k8s.io"
     resources:

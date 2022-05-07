@@ -63,10 +63,10 @@ ingress:
   #      - chart-example.local
 
 
-    
+
 
   rules:
-  - host: 
+  - host:
     http:
       paths:
       - path: /
@@ -109,7 +109,7 @@ tolerations: []
 
 affinity: {}
 
-prow: 
+prow:
   githubOrg: << your_github_org >>
   domainName: << your-domain.com >>
 

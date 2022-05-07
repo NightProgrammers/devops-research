@@ -12,7 +12,7 @@ spec:
     matchLabels:
       {{- include "ghproxy.selectorLabels" . | nindent 6 }}
   strategy:
-    type: Recreate      
+    type: Recreate
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -38,7 +38,7 @@ spec:
             - --cache-dir=/cache
             - --cache-sizeGB=99
             - --push-gateway=pushgateway
-            - --serve-metrics=true          
+            - --serve-metrics=true
           ports:
             - name: http
               containerPort: 8888
@@ -47,7 +47,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: cache
-              mountPath: /cache        
+              mountPath: /cache
       volumes:
       - name: cache
         persistentVolumeClaim:

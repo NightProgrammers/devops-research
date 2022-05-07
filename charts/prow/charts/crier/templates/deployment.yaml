@@ -59,10 +59,10 @@ spec:
               readOnly: true
             - name: s3-credentials
               mountPath: /etc/s3-credentials
-              readOnly: true         
+              readOnly: true
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      
+
       volumes:
       - name: config
         configMap:

@@ -24,7 +24,7 @@ serviceAccount:
   name: ""
   roleBinding:
     create: true
-    
+
 podAnnotations: {}
 
 podSecurityContext: {}

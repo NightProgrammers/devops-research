@@ -84,7 +84,7 @@ affinity: {}
 ### Custom values.
 prow:
   podsNamespace: default
-  
+
   domainName: << REPLACE >>
   githubAppId: <<insert-the-app-id-here>>
   githubAppCert: <<insert-downloaded-cert-here>>

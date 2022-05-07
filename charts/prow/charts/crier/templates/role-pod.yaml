@@ -6,7 +6,7 @@ metadata:
   name: {{ include "crier.roleName" . }}
   labels:
     {{- include "crier.labels" . | nindent 4 }}
-rules:  
+rules:
   - apiGroups:
       - ""
     resources:
@@ -37,5 +37,5 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ include "crier.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}  
+    namespace: {{ .Release.Namespace }}
 {{- end }}

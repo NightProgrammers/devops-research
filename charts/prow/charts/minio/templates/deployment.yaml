@@ -47,9 +47,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
           - server
-          - /data          
+          - /data
           env:
-          - name: MINIO_ROOT_USER                        
+          - name: MINIO_ROOT_USER
             value: "{{ .Values.prow.minioRootUser }}"
           - name: MINIO_ROOT_PASSWORD
             value: "{{ .Values.prow.minioRootPassword }}"
