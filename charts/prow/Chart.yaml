@@ -1,7 +1,9 @@
 apiVersion: v2
 name: prow
 description: A Helm chart for deploying Prow in self kubernetes cluster with S3 storage served by minio.
-
+maintainers:
+  - name: wuhuizuo
+    email: wuhuizuo@126.com
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
