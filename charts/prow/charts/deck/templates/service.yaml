@@ -13,4 +13,3 @@ spec:
       name: http
   selector:
     {{- include "deck.selectorLabels" . | nindent 4 }}
-  

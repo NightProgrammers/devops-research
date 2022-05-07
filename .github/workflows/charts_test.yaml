@@ -1,4 +1,4 @@
-name: Prow Chart Test
+name: Charts Test
 
 on: 
   pull_request:
