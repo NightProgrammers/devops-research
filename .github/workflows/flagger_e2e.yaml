@@ -24,6 +24,7 @@ jobs:
       - name: Setup Kubernetes
         uses: engineerd/setup-kind@v0.5.0
         with:
+          # renovate: datasource=go depName=sigs.k8s.io/kind
           version: v0.11.1
       - name: Install Flux in Kubernetes Kind
         run: |
