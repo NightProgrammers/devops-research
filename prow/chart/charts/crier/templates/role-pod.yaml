@@ -3,30 +3,31 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   namespace: {{ .Values.prow.podsNamespace }}
-  name: {{ include "crier.role" . }}
+  name: {{ include "crier.roleName" . }}
   labels:
     {{- include "crier.labels" . | nindent 4 }}
-- apiGroups:
-    - ""
-  resources:
-    - "pods"
-    - "events"
-  verbs:
-    - "get"
-    - "list"
-- apiGroups:
-    - ""
-  resources:
-    - "pods"
-  verbs:
-    - "patch"
+rules:  
+  - apiGroups:
+      - ""
+    resources:
+      - "pods"
+      - "events"
+    verbs:
+      - "get"
+      - "list"
+  - apiGroups:
+      - ""
+    resources:
+      - "pods"
+    verbs:
+      - "patch"
 
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   namespace: {{ .Values.prow.podsNamespace }}
-  name: {{ include "crier.roleBinding" . }}
+  name: {{ include "crier.roleBindingName" . }}
   labels:
     {{- include "crier.labels" . | nindent 4 }}
 roleRef:

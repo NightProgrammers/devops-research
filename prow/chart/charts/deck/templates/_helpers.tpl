@@ -65,17 +65,17 @@ Create the name of the service account to use
 {{/*
 Create the name of the role
 */}}
-{{- define "deck.role" -}}
+{{- define "deck.roleName" -}}
 {{- if .Values.serviceAccount.roleBinding.create }}
-{{- include "deck.fullname" }}
+{{- default (include "deck.fullname" .) .Values.serviceAccount.roleBinding.role }}
 {{- end }}
 {{- end }}
 
 {{/*
 Create the name of the role binding
 */}}
-{{- define "deck.roleBinding" -}}
+{{- define "deck.roleBindingName" -}}
 {{- if .Values.serviceAccount.roleBinding.create }}
-{{- include "deck.fullname" }}
+{{- default (include "deck.fullname" .) .Values.serviceAccount.roleBinding.name }}
 {{- end }}
 {{- end }}

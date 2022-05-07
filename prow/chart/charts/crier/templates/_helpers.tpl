@@ -65,17 +65,17 @@ Create the name of the service account to use
 {{/*
 Create the name of the role
 */}}
-{{- define "crier.role" -}}
+{{- define "crier.roleName" -}}
 {{- if .Values.serviceAccount.roleBinding.create }}
-{{- include "crier.fullname" }}
+{{- default (include "crier.fullname" .) .Values.serviceAccount.roleBinding.role }}
 {{- end }}
 {{- end }}
 
 {{/*
 Create the name of the role binding
 */}}
-{{- define "crier.roleBinding" -}}
+{{- define "crier.roleBindingName" -}}
 {{- if .Values.serviceAccount.roleBinding.create }}
-{{- include "crier.fullname" }}
+{{- default (include "crier.fullname" .) .Values.serviceAccount.roleBinding.name }}
 {{- end }}
 {{- end }}

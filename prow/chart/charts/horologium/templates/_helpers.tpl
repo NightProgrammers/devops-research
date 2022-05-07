@@ -61,3 +61,21 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the role
+*/}}
+{{- define "horologium.roleName" -}}
+{{- if .Values.serviceAccount.roleBinding.create }}
+{{- default (include "horologium.fullname" .) .Values.serviceAccount.roleBinding.role }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the role binding
+*/}}
+{{- define "horologium.roleBindingName" -}}
+{{- if .Values.serviceAccount.roleBinding.create }}
+{{- default (include "horologium.fullname" .) .Values.serviceAccount.roleBinding.name }}
+{{- end }}
+{{- end }}
