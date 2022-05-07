@@ -2,7 +2,6 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: "sinker"
 rules:
   - apiGroups:
@@ -49,7 +48,7 @@ rules:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: test-pods
+  namespace: {{ .Values.prow.podsNamespace }}
   name: "sinker"
 rules:
   - apiGroups:
@@ -68,7 +67,6 @@ rules:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: "hook"
 rules:
   - apiGroups:
@@ -94,7 +92,6 @@ rules:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: "tide"
 rules:
   - apiGroups:
@@ -112,7 +109,6 @@ rules:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: "statusreconciler"
 rules:
   - apiGroups:
@@ -125,7 +121,6 @@ rules:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: prow-controller-manager
 rules:
   - apiGroups:
@@ -173,7 +168,7 @@ rules:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: test-pods
+  namespace: {{ .Values.prow.podsNamespace }}
   name: prow-controller-manager
 rules:
   - apiGroups:
@@ -191,7 +186,6 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: "deck"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -204,7 +198,7 @@ subjects:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: test-pods
+  namespace: {{ .Values.prow.podsNamespace }}
   name: "deck"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -219,7 +213,6 @@ subjects:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: "horologium"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -232,7 +225,6 @@ subjects:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: "sinker"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -245,7 +237,7 @@ subjects:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: test-pods
+  namespace: {{ .Values.prow.podsNamespace }}
   name: "sinker"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -260,7 +252,6 @@ subjects:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: "hook"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -273,7 +264,6 @@ subjects:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: "tide"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -286,7 +276,6 @@ subjects:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: "statusreconciler"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -299,7 +288,6 @@ subjects:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: prow
   name: prow-controller-manager
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -312,7 +300,7 @@ subjects:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: test-pods
+  namespace: {{ .Values.prow.podsNamespace }}
   name: prow-controller-manager
 roleRef:
   apiGroup: rbac.authorization.k8s.io

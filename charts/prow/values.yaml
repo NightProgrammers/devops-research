@@ -111,3 +111,4 @@ prow:
   domainName: << your-domain.com >>
 
   # test-pods namespace
+  podsNamespace: default
