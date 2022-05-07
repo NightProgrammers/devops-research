@@ -24,14 +24,25 @@ version: 0.1.0
 appVersion: "1.16.0"
 
 dependencies:
-  - name: prow-crd  
+  - name: prow-crd
+    version: 0.1.0
   - name: crier
+    version: 0.1.0
   - name: deck
+    version: 0.1.0
   - name: ghproxy
+    version: 0.1.0
   - name: hook
+    version: 0.1.0
   - name: horologium
+    version: 0.1.0
   - name: minio
+    version: 0.1.0
   - name: prow-controller-manager
+    version: 0.1.0
   - name: sink
+    version: 0.1.0
   - name: statusreconciler
+    version: 0.1.0
   - name: tide
+    version: 0.1.0
