@@ -1,0 +1,33 @@
+{{- if .Values.serviceAccount.roleBinding.create }}
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "crier.role" . }}
+  labels:
+    {{- include "crier.labels" . | nindent 4 }}
+- apiGroups:
+    - "prow.k8s.io"
+  resources:
+    - "prowjobs"
+  verbs:
+    - "get"
+    - "watch"
+    - "list"
+    - "patch"
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "crier.roleBinding" . }}
+  labels:
+    {{- include "crier.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: crier
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "crier.serviceAccountName" . }}
+{{- end }}
