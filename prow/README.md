@@ -17,3 +17,7 @@ Here deploy with local k8s cluster with s3 sample config.
 - golang 1.18+.
 - [Helm](https://github.com/helm/helm/releases) CLI tool
 - local k8s cluster.
+
+### deploy with helm chart
+
+chart dir: `<repo root dir>/charts/prow`
