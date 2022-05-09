@@ -50,8 +50,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: prow.<< your-domain.com >>
-      paths:
+    - paths:
         - path: /hook
           pathType: Prefix
   tls: []
