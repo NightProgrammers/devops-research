@@ -24,7 +24,7 @@ jobs:
         working-directory: argo/workflow
         run: |
           kubectl create namespace argo
-          kubectl -n argo apply -f setup
+          kubectl -n argo apply -f https://raw.githubusercontent.com/argoproj/argo-workflows/master/manifests/quick-start-postgres.yaml
 
           # wait all be ready
           kubectl -n argo wait deploy --all --for condition=Available --timeout 5m

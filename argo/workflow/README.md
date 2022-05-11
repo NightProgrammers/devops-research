@@ -1,11 +1,11 @@
 Argo workflows
 ===
 
-https://www.katacoda.com/argoproj/courses/argo-workflows/getting-started
+accroding to https://argoproj.github.io/argo-workflows/quick-start/
 
 ## Install
 
 ```bash
 kubectl create namespace argo
-kubectl -n argo apply -f setup
+kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-workflows/master/manifests/quick-start-postgres.yaml
 ```
