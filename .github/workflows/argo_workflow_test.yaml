@@ -12,6 +12,10 @@ on:
 jobs:
   kubernetes:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        feature: [workflow, workflow-template]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -28,12 +32,13 @@ jobs:
 
           # wait all be ready
           kubectl -n argo wait deploy --all --for condition=Available --timeout 5m
-      - name: Create a workflow and wait it to complete in Argo
-        working-directory: argo/workflow/workflow
+      - name: Verify ${{ matrix.feature }} feature
+        working-directory: argo/workflow
         run: |
-          kubectl -n argo apply -f workflow-hello.yaml
-          kubectl -n argo wait workflows/hello --for condition=Completed --timeout 2m
+          kubectl -n argo create -f ${{ matrix.feature }}
+          kubectl -n argo wait workflows --all --for condition=Completed --timeout 2m
       - name: Debug failure
         if: failure()
         run: |
           kubectl -n argo get all
+          kubectl -n argo describe all
