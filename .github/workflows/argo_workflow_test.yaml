@@ -1,0 +1,39 @@
+# verify with local kind k8s cluster.
+name: Argo workflow E2E test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - "argo/workflow/**"
+      - ".github/workflows/argo_workflow_*"
+
+jobs:
+  kubernetes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Kubernetes
+        uses: engineerd/setup-kind@v0.5.0
+        with:
+          # renovate: datasource=go depName=sigs.k8s.io/kind
+          version: v0.11.0
+      - name: Install Argo Workflow in Kubernetes Kind
+        working-directory: argo/workflow
+        run: |
+          kubectl create namespace argo
+          kubectl -n argo apply -f setup
+
+          # wait all be ready
+          kubectl -n argo wait deploy --all --for condition=Available --timeout 5m
+      - name: Create a workflow and wait it to complete in Argo
+        working-directory: argo/workflow/workflow
+        run: |
+          kubectl -n argo apply -f workflow-hello.yaml
+          kubectl -n argo wait workflows/hello --for condition=Completed --timeout 2m
+      - name: Debug failure
+        if: failure()
+        run: |
+          kubectl -n argo get all
