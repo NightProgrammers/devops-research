@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        feature: [workflow, workflow-template]
+        feature: [workflow, workflow-template, cron-workflow]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -25,18 +25,24 @@ jobs:
           # renovate: datasource=go depName=sigs.k8s.io/kind
           version: v0.11.0
       - name: Install Argo Workflow in Kubernetes Kind
-        working-directory: argo/workflow
         run: |
           kubectl create namespace argo
           kubectl -n argo apply -f https://raw.githubusercontent.com/argoproj/argo-workflows/master/manifests/quick-start-postgres.yaml
 
           # wait all be ready
           kubectl -n argo wait deploy --all --for condition=Available --timeout 5m
-      - name: Verify ${{ matrix.feature }} feature
-        working-directory: argo/workflow
+      - name: Create ${{ matrix.feature }} feature data
+        run: kubectl -n argo create -f argo/workflow/${{ matrix.feature }}
+      - name: Waitting for verify cron workflows condition.
+        if: matrix.feature == 'cron-workflow'
         run: |
-          kubectl -n argo create -f ${{ matrix.feature }}
-          kubectl -n argo wait workflows --all --for condition=Completed --timeout 2m
+          # wait until cron-workflow dispatched workflow
+          until kubectl -n argo get workflows | egrep 'test-cron-wf-[0-9]+' | grep Running
+          do
+            sleep 1
+          done
+      - name: Verify ${{ matrix.feature }} feature
+        run: kubectl -n argo wait workflows --all --for condition=Completed --timeout 2m
       - name: Debug failure
         if: failure()
         run: |
