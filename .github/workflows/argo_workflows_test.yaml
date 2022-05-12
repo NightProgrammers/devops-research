@@ -1,12 +1,12 @@
 # verify with local kind k8s cluster.
-name: Argo workflow E2E test
+name: Argo workflows E2E test
 
 on:
   workflow_dispatch:
   pull_request:
     branches: [main]
     paths:
-      - "argo/workflow/**"
+      - "argo/workflows/**"
       - ".github/workflows/argo_workflow_*"
 
 jobs:
@@ -32,7 +32,8 @@ jobs:
           # wait all be ready
           kubectl -n argo wait deploy --all --for condition=Available --timeout 5m
       - name: Create ${{ matrix.feature }} feature data
-        run: kubectl -n argo create -f argo/workflow/${{ matrix.feature }}
+        working-directory: argo/workflows
+        run: kubectl -n argo create -f ${{ matrix.feature }}
       - name: Waitting for verify cron workflows condition.
         if: matrix.feature == 'cron-workflow'
         run: |
