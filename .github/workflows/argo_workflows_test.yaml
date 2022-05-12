@@ -7,7 +7,7 @@ on:
     branches: [main]
     paths:
       - "argo/workflows/**"
-      - ".github/workflows/argo_workflow_*"
+      - ".github/workflows/argo_workflows_*"
 
 jobs:
   kubernetes:
