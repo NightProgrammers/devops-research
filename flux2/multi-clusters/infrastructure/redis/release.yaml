@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: bitnami
         namespace: flux-system
-      version: "11.3.4" # if updated, do not upgrade?
+      version: "16.11.3" # if updated, do not upgrade?
   interval: 1h0m0s
   install:
     remediation:
