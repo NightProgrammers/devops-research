@@ -50,11 +50,11 @@ spec:
           - /data
           env:
           - name: MINIO_ROOT_USER
-            value: "{{ .Values.prow.minioRootUser }}"
+            value: "{{ .Values.minioRootUser }}"
           - name: MINIO_ROOT_PASSWORD
-            value: "{{ .Values.prow.minioRootPassword }}"
+            value: "{{ .Values.minioRootPassword }}"
           - name: MINIO_REGION_NAME
-            value: "{{ .Values.prow.minioRegion }}"
+            value: "{{ .Values.minioRegion }}"
           ports:
             - name: http
               containerPort: 9000
@@ -75,7 +75,11 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: minio
+            {{- if .Values.pvc.existedName }}
+            claimName: {{ .Values.pvc.existedName }}
+            {{- else }}
+            claimName: {{ include "minio.fullname" . }}
+            {{- end}}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

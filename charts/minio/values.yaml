@@ -25,10 +25,12 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -43,7 +45,8 @@ service:
 ingress:
   enabled: false
   className: ""
-  annotations: {}
+  annotations:
+    {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
@@ -56,7 +59,8 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -82,14 +86,9 @@ tolerations: []
 affinity: {}
 
 ### Custom values.
-prow:
-  domainName: << REPLACE >>
-  githubAppId: <<insert-the-app-id-here>>
-  githubAppCert: <<insert-downloaded-cert-here>>
-  # Generate via `openssl rand -hex 20`. This is the secret used in the GitHub webhook configuration
-  githubHmacToken: << insert-hmac-token-here >>
-
-  # minio s3 deploy.
-  minioRegion: minio
-  minioRootUser: <<CHANGE_ME_MINIO_ROOT_USER>>
-  minioRootPassword: <<CHANGE_ME_MINIO_ROOT_PASSWORD>>
+minioRegion: minio
+minioRootUser: root
+minioRootPassword: password
+pvc:
+  existedName: "" # if not empty use the existed pvc, else auto create a new pvc.
+  storageSize: 100Gi

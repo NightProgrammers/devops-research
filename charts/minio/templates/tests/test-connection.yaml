@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "minio.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "minio.fullname" . }}:{{ .Values.service.port }}/minio/health/live']
   restartPolicy: Never
