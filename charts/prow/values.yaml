@@ -1,2 +1,7 @@
-# nothing
-# WIP: should split to serval deployment yaml files instead of charts.
+minio:
+  auth:
+    rootUser: root
+    rootPassword: password
+  defaultBuckets: "prow-logs,tide,status-reconciler"
+  persistence:
+    size: 10Gi
