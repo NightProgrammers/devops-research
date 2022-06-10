@@ -55,19 +55,14 @@ jobs:
           yq -i e '.prow.githubAppId = "${{ secrets.PROW_APP_ID }}"' values.yaml
           yq -i e '.prow.githubAppCert = "${{ secrets.PROW_APP_CERT }}" | .prow.githubAppCert style="double"' values.yaml
           yq -i e '.prow.githubHmacToken = "${{ secrets.PROW_HMAC_TOKEN }}"' values.yaml
-          orgName=$(basename ${{ github.event.repository.full_name }})
+          orgName=$(dirname ${{ github.event.repository.full_name }})
           yq -i e ".prow.githubOrg = \"${orgName}\"" values.yaml
 
           cat values.yaml
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: values.yaml
-          path: charts/prow/values.yaml
+
       - name: Run chart-testing (install)
         run: |
           ct install \
             --all \
             --debug \
-            --chart-repos "bitnami=https://charts.bitnami.com/bitnami" \
-            --helm-extra-args "--dependency-update"
+            --chart-repos "bitnami=https://charts.bitnami.com/bitnami"
