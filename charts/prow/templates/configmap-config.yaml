@@ -46,7 +46,7 @@ data:
           gcs_configuration:
             bucket: s3://prow-logs
             path_strategy: explicit
-          s3_credentials_secret: s3-credentials
+          s3_credentials_secret: {{ include "prow.fullname" . }}-s3-credentials
           utility_images:
             clonerefs: gcr.io/k8s-prow/clonerefs:v20220504-0b3a7e15f4
             entrypoint: gcr.io/k8s-prow/entrypoint:v20220504-0b3a7e15f4

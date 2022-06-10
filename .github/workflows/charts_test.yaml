@@ -7,7 +7,7 @@ on:
       - "charts/**"
       - ".github/workflows/chart*"
 jobs:
-  lint-test:
+  chart-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -42,11 +42,27 @@ jobs:
             ct lint --all --debug --chart-dirs=${d#./}
           done
 
-      # - name: Setup Kubernetes
-      #   uses: engineerd/setup-kind@v0.5.0
-      #   with:
-      #     # renovate: datasource=go depName=sigs.k8s.io/kind
-      #     version: v0.12.0
+      - name: Setup Kubernetes
+        uses: engineerd/setup-kind@v0.5.0
+        with:
+          # renovate: datasource=go depName=sigs.k8s.io/kind
+          version: v0.12.0
 
-      # - name: Run chart-testing (install)
-      #   run: ct install --all --debug --dependency-update
+      - name: Replace fields in `charts/prow/values.yaml`
+        working-directory: charts/prow
+        run: |
+          yq -i e '.prow.domainName = "test.io"' values.yaml
+          yq -i e '.prow.githubAppId = "${{ secrets.PROW_APP_ID }}"' values.yaml
+          yq -i e '.prow.githubAppCert = "${{ secrets.PROW_APP_CERT }}" | .prow.githubAppCert style="double"' values.yaml
+          yq -i e '.prow.githubHmacToken = "${{ secrets.PROW_HMAC_TOKEN }}"' values.yaml
+          orgName=$(dirname ${{ github.event.repository.full_name }})
+          yq -i e ".prow.githubOrg = \"${orgName}\"" values.yaml
+
+          cat values.yaml
+
+      - name: Run chart-testing (install)
+        run: |
+          ct install \
+            --all \
+            --debug \
+            --chart-repos "bitnami=https://charts.bitnami.com/bitnami"
