@@ -20,7 +20,8 @@ prow:
   domainName: << REPLACE >>
   githubAppId: << REPLACE >>
   githubAppCert: << REPLACE >>
-  # Generate via `openssl rand -hex 20`. This is the secret used in the GitHub webhook configuration
+  # Generate via `openssl rand -hex 20`.
+  # This is the secret used in the GitHub webhook configuration
   githubHmacToken: << REPLACE >>
 
   # github org:
@@ -61,7 +62,8 @@ crier:
     # Annotations to add to the service account
     annotations: {}
     # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
+    # If not set and create is true,
+    # a name is generated using the `fullname` template.
     name: ""
     roleBinding:
       create: true
@@ -90,7 +92,8 @@ deck:
     # Annotations to add to the service account
     annotations: {}
     # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
+    # If not set and create is true,
+    # a name is generated using the `fullname` template
     name: ""
     roleBinding:
       create: true
@@ -155,7 +158,8 @@ hook:
     # Annotations to add to the service account
     annotations: {}
     # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
+    # If not set and create is true,
+    # a name is generated using the `fullname` template
     name: ""
     roleBinding:
       create: true
@@ -183,7 +187,8 @@ horologium:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
-  replicaCount: 1 # Do not scale up.
+  # Do not scale up.
+  replicaCount: 1
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -196,7 +201,8 @@ horologium:
     # Annotations to add to the service account
     annotations: {}
     # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
+    # If not set and create is true,
+    # a name is generated using the `fullname` template
     name: ""
     roleBinding:
       create: true
@@ -222,7 +228,8 @@ pcm:
     # Annotations to add to the service account
     annotations: {}
     # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
+    # If not set and create is true,
+    # a name is generated using the `fullname` template
     name: ""
     roleBinding:
       create: true
@@ -248,7 +255,8 @@ sinker:
     # Annotations to add to the service account
     annotations: {}
     # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
+    # If not set and create is true,
+    # a name is generated using the `fullname` template
     name: ""
     roleBinding:
       create: true
@@ -274,7 +282,8 @@ statusReconciler:
     # Annotations to add to the service account
     annotations: {}
     # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
+    # If not set and create is true,
+    # a name is generated using the `fullname` template
     name: ""
     roleBinding:
       create: true
@@ -287,7 +296,8 @@ tide:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
-  replicaCount: 1 # Do not scale up.
+  # Do not scale up.
+  replicaCount: 1
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -303,7 +313,8 @@ tide:
     # Annotations to add to the service account
     annotations: {}
     # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
+    # If not set and create is true,
+    # a name is generated using the `fullname` template
     name: ""
     roleBinding:
       create: true
