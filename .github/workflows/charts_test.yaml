@@ -59,10 +59,15 @@ jobs:
           yq -i e ".prow.githubOrg = \"${orgName}\"" values.yaml
 
           cat values.yaml
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: values.yaml
+          path: charts/prow/values.yaml
       - name: Run chart-testing (install)
         run: |
           ct install \
             --all \
             --debug \
-            --chart-repos "bitnami=https://charts.bitnami.com/bitnami"
+            --chart-repos "bitnami=https://charts.bitnami.com/bitnami" \
             --helm-extra-args "--dependency-update"
