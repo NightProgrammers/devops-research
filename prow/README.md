@@ -21,15 +21,16 @@ Here deploy with local k8s cluster with s3 sample config.
 ### Deploy with kubectl
 
 using kubectl to apply k8s yaml files.
-1. create cluster role binding, pls see [this](https://github.com/kubernetes/test-infra/blob/master/prow/getting_started_deploy.md#create-cluster-role-bindings).
-2. create secrets, pls see [this](https://github.com/kubernetes/test-infra/blob/master/prow/getting_started_deploy.md#create-the-github-secrets)
+> if you need create cluster role binding, pls see [this](https://github.com/kubernetes/test-infra/blob/master/prow/getting_started_deploy.md#create-cluster-role-bindings).
 
-3. apply CRD from [here](https://raw.githubusercontent.com/kubernetes/test-infra/master/config/prow/cluster/prowjob-crd/prowjob_customresourcedefinition.yaml)
+1. create secrets, pls see [this](https://github.com/kubernetes/test-infra/blob/master/prow/getting_started_deploy.md#create-the-github-secrets)
+
+2. apply CRD from [here](https://raw.githubusercontent.com/kubernetes/test-infra/master/config/prow/cluster/prowjob-crd/prowjob_customresourcedefinition.yaml)
    ```bash
    kubectl apply --server-side=true -f https://raw.githubusercontent.com/kubernetes/test-infra/master/config/prow/cluster/prowjob-crd/prowjob_customresourcedefinition.yaml
    ```
-4. download deployment yaml from [here](https://raw.githubusercontent.com/kubernetes/test-infra/master/config/prow/cluster/starter/starter-s3.yaml)
-5. update deployment yaml content:
+3. download deployment yaml from [here](https://raw.githubusercontent.com/kubernetes/test-infra/master/config/prow/cluster/starter/starter-s3.yaml)
+4. update deployment yaml content:
    1. The GitHub app cert by replacing the `<<insert-downloaded-cert-here>>` string
    2. The GitHub app id by replacing the `<<insert-the-app-id-here>>` string
    3. The hmac token by replacing the `<< insert-hmac-token-here >>` string
@@ -37,8 +38,8 @@ using kubectl to apply k8s yaml files.
    5. Your GitHub organization(s) by replacing the `<< your_github_org >>` string
    6. The S3 minio user by replacing the `<<CHANGE_ME_MINIO_ROOT_USER>>` string
    7. The S3 minio password by replacing the `<<CHANGE_ME_MINIO_ROOT_PASSWORD>>` string
-6. create namespace: `prow`, `prod`, `test-pods` in cluster.
-7. deploy prow deployment and service:
+5. create namespace: `prow`, `prod`, `test-pods` in cluster.
+6. deploy prow deployment and service:
    ```bash
    kubectl apply -f starter-s3.yaml
    ```
