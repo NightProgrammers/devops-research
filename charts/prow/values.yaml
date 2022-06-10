@@ -17,15 +17,15 @@ securityContext: {}
 prow:
   podsNamespace: default
 
-  domainName: REPLACE
-  githubAppId: REPLACE
-  githubAppCert: REPLACE
+  domainName: << REPLACE >>
+  githubAppId: << REPLACE >>
+  githubAppCert: << REPLACE >>
   # Generate via `openssl rand -hex 20`.
   # This is the secret used in the GitHub webhook configuration
-  githubHmacToken: REPLACE
+  githubHmacToken: << REPLACE >>
 
   # github org:
-  githubOrg: REPLACE
+  githubOrg: << REPLACE >>
 
 ### Values for minIO Sub chart.
 minio:
