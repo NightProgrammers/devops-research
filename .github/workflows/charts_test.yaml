@@ -1,9 +1,9 @@
 name: Charts Test
 
-on: 
+on:
   pull_request:
     branches: [main]
-    paths: 
+    paths:
       - "charts/**"
       - ".github/workflows/chart*"
 jobs:
@@ -49,4 +49,4 @@ jobs:
           version: v0.12.0
 
       - name: Run chart-testing (install)
-        run: ct install --all --debug
+        run: ct install --all --debug --dependency-update
