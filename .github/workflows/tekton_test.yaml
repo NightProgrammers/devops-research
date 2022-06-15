@@ -1,0 +1,89 @@
+name: Tekton Test
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "tekton/**"
+      - ".github/workflows/tekton*"
+jobs:
+  getting-started-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Kubernetes
+        uses: engineerd/setup-kind@v0.5.0
+        with:
+          # renovate: datasource=go depName=sigs.k8s.io/kind
+          version: v0.12.0
+
+      - name: Setup Tekton basic component
+        working-directory: tekton
+        timeout-minutes: 3
+        run: |-
+          kubectl apply -f setup/pipeline/release.yaml
+
+          opts="-n tekton-pipelines -l app.kubernetes.io/part-of=tekton-pipelines"
+          # wait for pod displayed
+          until kubectl get pods ${opts}
+          do
+            sleep 1
+          done
+
+          # wait for deployment be ready
+          kubectl wait deployments ${opts} --for condition=Available
+
+      - name: Setup Tekton trigger component
+        working-directory: tekton
+        run: |
+          kubectl apply -f setup/trigger/release.yaml
+          kubectl apply -f setup/trigger/interceptors.yaml
+
+          opts="-n tekton-pipelines -l app.kubernetes.io/part-of=tekton-triggers"
+          # wait for pod displayed
+          until kubectl get pods ${opts}
+          do
+            sleep 1
+          done
+
+          # wait for deployment be ready
+          kubectl wait deployments ${opts} --for condition=Available
+
+      - name: Setup Tekton dashborad component
+        timeout-minutes: 3
+        working-directory: tekton
+        run: |
+          kubectl apply -f setup/dashboard/release.yaml
+
+          opts="-n tekton-pipelines -l app.kubernetes.io/part-of=tekton-dashboard"
+          # wait for pod displayed
+          until kubectl get pods ${opts}
+          do
+            sleep 1
+          done
+
+          # wait for deployment be ready
+          kubectl wait deployments ${opts} --for condition=Available
+      - name: Getting started - create namespace
+        timeout-minutes: 3
+        run: kubectl create namespace getting-started
+
+      - name: Getting started - set security
+        working-directory: tekton
+        run: |
+          kubectl -n getting-started apply \
+            -f started/setup/admin-role.yaml \
+            -f started/setup/clusterrolebinding.yaml \
+            -f started/setup/webhook-role.yaml
+
+      - name: Getting started - create resources
+        working-directory: tekton
+        run: |
+          kubectl apply -n getting-started -f started/resources/pipeline.yaml
+          kubectl apply -n getting-started -f started/resources/triggers.yaml
+      - name: Getting started - other steps should not in CI job
+        run: echo "Please see tekton/README.md"

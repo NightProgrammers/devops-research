@@ -4,36 +4,36 @@ metadata:
   name: tekton-triggers-createwebhook
   namespace: getting-started
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - get
-  - list
-  - create
-  - update
-  - delete
-- apiGroups:
-  - triggers.tekton.dev
-  resources:
-  - eventlisteners
-  verbs:
-  - get
-  - list
-  - create
-  - update
-  - delete
-- apiGroups:
-  - extensions
-  resources:
-  - ingresses
-  verbs:
-  - create
-  - get
-  - list
-  - delete
-  - update
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - triggers.tekton.dev
+    resources:
+      - eventlisteners
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - networking.k8s.io
+    resources:
+      - ingresses
+    verbs:
+      - create
+      - get
+      - list
+      - delete
+      - update
 ---
 apiVersion: v1
 kind: ServiceAccount

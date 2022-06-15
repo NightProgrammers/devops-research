@@ -7,7 +7,7 @@ spec:
   params:
     - name: gitrevision
       description: The git revision
-      default: master
+      default: main
     - name: gitrepositoryurl
       description: The git repository url
     - name: namespace
@@ -27,10 +27,10 @@ spec:
             resourceSpec:
               type: git
               params:
-              - name: revision
-                value: $(tt.params.gitrevision)
-              - name: url
-                value: $(tt.params.gitrepositoryurl)
+                - name: revision
+                  value: $(tt.params.gitrevision)
+                - name: url
+                  value: $(tt.params.gitrepositoryurl)
           - name: image-source
             resourceSpec:
               type: image
@@ -67,6 +67,6 @@ spec:
   serviceAccountName: tekton-triggers-example-sa
   triggers:
     - bindings:
-      - ref: getting-started-pipelinebinding
+        - ref: getting-started-pipelinebinding
       template:
         ref: getting-started-triggertemplate
