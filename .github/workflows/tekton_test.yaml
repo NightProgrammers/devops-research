@@ -73,6 +73,7 @@ jobs:
         run: kubectl create namespace getting-started
 
       - name: Getting started - set security
+        working-directory: tekton
         run: |
           kubectl -n getting-started apply \
             -f started/setup/admin-role.yaml \
