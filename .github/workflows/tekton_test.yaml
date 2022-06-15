@@ -23,10 +23,11 @@ jobs:
 
       - name: Setup Tekton basic component
         working-directory: tekton
+        timeout-minutes: 3
         run: |-
           kubectl apply -f setup/pipeline/release.yaml
 
-          opts='-n tekton-pipelines -l "app.kubernetes.io/part-of=tekton-pipelines"'
+          opts="-n tekton-pipelines -l app.kubernetes.io/part-of=tekton-pipelines"
           # wait for pod displayed
           until kubectl get pods ${opts}
           do
@@ -42,7 +43,7 @@ jobs:
           kubectl apply -f setup/trigger/release.yaml
           kubectl apply -f setup/trigger/interceptors.yaml
 
-          opts='-n tekton-pipelines -l "app.kubernetes.io/part-of=tekton-triggers"'
+          opts="-n tekton-pipelines -l app.kubernetes.io/part-of=tekton-triggers"
           # wait for pod displayed
           until kubectl get pods ${opts}
           do
@@ -53,11 +54,12 @@ jobs:
           kubectl wait deployments ${opts} --for condition=Available
 
       - name: Setup Tekton dashborad component
+        timeout-minutes: 3
         working-directory: tekton
         run: |
           kubectl apply -f setup/dashboard/release.yaml
 
-          opts='-n tekton-pipelines -l "app.kubernetes.io/part-of=tekton-dashboard"'
+          opts="-n tekton-pipelines -l app.kubernetes.io/part-of=tekton-dashboard"
           # wait for pod displayed
           until kubectl get pods ${opts}
           do
@@ -67,6 +69,7 @@ jobs:
           # wait for deployment be ready
           kubectl wait deployments ${opts} --for condition=Available
       - name: Getting started - create namespace
+        timeout-minutes: 3
         run: kubectl create namespace getting-started
 
       - name: Getting started - set security
