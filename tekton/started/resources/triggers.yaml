@@ -67,8 +67,14 @@ spec:
       spec:
         workspaces:
           - name: git-source
-            emptyDir: {}
-        serviceAccountName: tekton-triggers-example-sa
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteMany
+                resources:
+                  requests:
+                    storage: 1Gi
+                volumeMode: Filesystem
         pipelineRef:
           name: getting-started-pipeline2
         params:
