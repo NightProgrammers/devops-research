@@ -72,14 +72,9 @@ kubectl -n getting-started apply \
 
 
 ```bash
-kubectl apply -n getting-started -f started/resources/pipeline.yaml
-# or
-# kubectl apply -n getting-started  -f https://raw.githubusercontent.com/tektoncd/triggers/main/docs/getting-started/pipeline.yaml
-
+kubectl apply -n getting-started -f started/resources/tasks
+kubectl apply -n getting-started -f started/resources/pipelines
 kubectl apply -f started/resources/triggers.yaml
-# or
-# kubectl apply -n getting-started -f https://raw.githubusercontent.com/tektoncd/triggers/main/docs/getting-started/triggers.yaml
-
 ```
 
 ### Setup ingress

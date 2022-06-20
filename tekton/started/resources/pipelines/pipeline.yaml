@@ -115,10 +115,12 @@ spec:
     - name: source-repo
       type: git
   check:
+    name: test-all
     image: golang
     command: ["go"]
     workingDir: "$(resources.source-repo.path)"
     args: ["test", "./..."]
+
 ---
 # Finally, we need something to receive our cloudevent announcing success!
 # That is this services only purpose

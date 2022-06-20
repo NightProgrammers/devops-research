@@ -45,6 +45,36 @@ spec:
                   value: http://event-display.getting-started.svc.cluster.local
 ---
 apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: getting-started-triggertemplate2
+  namespace: getting-started
+spec:
+  params:
+    - name: gitrevision
+      description: The git revision
+      default: main
+    - name: full-repo-name
+      description: The git repository url
+    - name: namespace
+      description: The namespace to create the resources
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: getting-started-pipeline2-run-
+        namespace: $(tt.params.namespace)
+      spec:
+        serviceAccountName: tekton-triggers-example-sa
+        pipelineRef:
+          name: getting-started-pipeline2
+        params:
+          - name: repo-name
+            value: $(tt.params.full-repo-name)
+          - name: git-revision
+            value: $(tt.params.gitrevision)
+---
+apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
   name: getting-started-pipelinebinding
@@ -57,6 +87,8 @@ spec:
       value: getting-started
     - name: gitrepositoryurl
       value: "https://github.com/$(body.repository.full_name)"
+    - name: full-repo-name
+      value: "$(body.repository.full_name)"
 ---
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
@@ -70,3 +102,7 @@ spec:
         - ref: getting-started-pipelinebinding
       template:
         ref: getting-started-triggertemplate
+    - bindings:
+        - ref: getting-started-pipelinebinding
+      template:
+        ref: getting-started-triggertemplate2
