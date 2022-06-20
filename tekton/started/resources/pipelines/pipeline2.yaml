@@ -14,6 +14,7 @@ spec:
     - name: set-github-status-start
       taskRef:
         name: github-set-status
+      timeout: 1m
       params:
         - name: REPO_FULL_NAME
           value: $(params.repo-name)
@@ -29,6 +30,8 @@ spec:
     - name: fetch-from-git
       taskRef:
         name: git-clone
+      runAfter:
+        - set-github-status-start
       params:
         - name: url
           value: "https://github.com/$(params.repo-name)"
@@ -41,22 +44,26 @@ spec:
       taskRef:
         name: golang-build
       runAfter:
-        - "fetch-from-git"
+        - fetch-from-git
       workspaces:
         - name: source
           workspace: git-source
       params:
+        - name: package
+          value: "github.com/$(params.repo-name)"
         - name: packages
           value: ./...
     - name: go-test
       taskRef:
         name: golang-test
       runAfter:
-        - "fetch-from-git"
+        - fetch-from-git
       workspaces:
         - name: source
           workspace: git-source
       params:
+        - name: package
+          value: "github.com/$(params.repo-name)"
         - name: packages
           value: ./...
   finally:

@@ -65,6 +65,9 @@ spec:
         generateName: getting-started-pipeline2-run-
         namespace: $(tt.params.namespace)
       spec:
+        workspaces:
+          - name: git-source
+            emptyDir: {}
         serviceAccountName: tekton-triggers-example-sa
         pipelineRef:
           name: getting-started-pipeline2
