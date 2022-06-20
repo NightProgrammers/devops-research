@@ -10,7 +10,8 @@ spec:
   workspaces:
     - name: git-source
   tasks:
-    # TODO: can it be auto inserted?
+    # TODO: using commit-status-tracker to replace explicit tasks.
+    # https://github.com/tektoncd/experimental/tree/main/commit-status-tracker
     - name: set-github-status-start
       taskRef:
         name: github-set-status
