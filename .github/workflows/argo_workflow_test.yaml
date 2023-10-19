@@ -18,7 +18,7 @@ jobs:
         feature: [workflow, workflow-template, cron-workflow]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Kubernetes
         uses: engineerd/setup-kind@v0.5.0
         with:
