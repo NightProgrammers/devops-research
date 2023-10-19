@@ -17,7 +17,7 @@ jobs:
         solution: [multi-clusters, multi-tenants]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup tools
         uses: ./.github/actions/flux2/tools
       - name: Validate manifests
